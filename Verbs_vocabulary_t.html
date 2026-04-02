@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Verbs Flashcards - INTECAP</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: rgb(255, 206, 28);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            margin: 0;
+            min-height: 100vh;
+        }
+        h1 { 
+            color: #2c3e50; 
+            margin-bottom: 15px; 
+            font-size: 1.8rem;
+            text-align: center;
+        }
+        p {
+            color: #2c3e50;
+            text-align: center;
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+            max-width: 90%;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            width: 100%;
+            max-width: 100%;
+            padding: 0 10px;
+        }
+        /* Contenedor de la tarjeta */
+        .card-container {
+            perspective: 1000px;
+            height: 200px;
+            cursor: pointer;
+        }
+        .card {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 15px;
+        }
+        /* Clase para rotar */
+        .card.is-flipped {
+            transform: rotateY(180deg);
+        }
+        /* Caras de la tarjeta */
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 15px;
+            padding: 15px;
+        }
+        .card-front {
+            background-color: #ffffff;
+            color: #2c3e50;
+            border: 3px solid #3498db;
+        }
+        .card-back {
+            background-color: #3498db;
+            color: white;
+            transform: rotateY(180deg);
+        }
+        .verb-text { 
+            font-size: 1.8rem; 
+            font-weight: bold; 
+            margin-bottom: 8px; 
+        }
+        .tense-label { 
+            font-size: 0.75rem; 
+            text-transform: uppercase; 
+            opacity: 0.8; 
+        }
+        
+        .speak-btn {
+            background: #2c3e50;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 20px;
+            margin-top: 10px;
+            cursor: pointer;
+            font-size: 0.7rem;
+            touch-action: manipulation;
+        }
+        .speak-btn:hover { 
+            background: #1a252f; 
+        }
+        .speak-btn:active {
+            transform: scale(0.95);
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            h1 {
+                font-size: 1.5rem;
+                margin-bottom: 10px;
+            }
+            p {
+                font-size: 0.9rem;
+                margin-bottom: 15px;
+            }
+            .grid {
+                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+                gap: 12px;
+                padding: 0 5px;
+            }
+            .card-container {
+                height: 180px;
+            }
+            .verb-text {
+                font-size: 1.5rem;
+            }
+            .tense-label {
+                font-size: 0.7rem;
+            }
+            .speak-btn {
+                padding: 5px 10px;
+                font-size: 0.65rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            h1 {
+                font-size: 1.3rem;
+                margin-bottom: 8px;
+            }
+            p {
+                font-size: 0.85rem;
+            }
+            .grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+            .card-container {
+                height: 160px;
+            }
+            .card-face {
+                padding: 12px;
+            }
+            .verb-text {
+                font-size: 1.3rem;
+                margin-bottom: 5px;
+            }
+            .tense-label {
+                font-size: 0.65rem;
+            }
+            .speak-btn {
+                padding: 4px 8px;
+                font-size: 0.6rem;
+                margin-top: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Regular verbs ending in -t</h1>
+    <p>Click on the card to see the Past Tense. Click the button to hear it!</p>
+
+    <div class="grid">
+        <div class="card-container">
+            <div class="card" onclick="this.classList.toggle('is-flipped')">
+                <div class="card-face card-front">
+                    <span class="tense-label">Present</span>
+                    <span class="verb-text">Cook</span>
+                    <button class="speak-btn" onclick="event.stopPropagation(); speak('Cook')">🔊 Pronounce</button>
+                </div>
+                <div class="card-face card-back">
+                    <span class="tense-label">Past Simple</span>
+                    <span class="verb-text">Cooked</span>
+                    <span class="tense-label">Cocinó</span>
+                    <button class="speak-btn" onclick="event.stopPropagation(); speak('Cooked')">🔊 Pronounce</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-container">
+            <div class="card" onclick="this.classList.toggle('is-flipped')">
+                <div class="card-face card-front">
+                    <span class="tense-label">Present</span>
+                    <span class="verb-text">Touch</span>
+                    <button class="speak-btn" onclick="event.stopPropagation(); speak('Touch')">🔊 Pronounce</button>
+                </div>
+                <div class="card-face card-back">
+                    <span class="tense-label">Past Simple</span>
+                    <span class="verb-text">Touched</span>
+                    <span class="tense-label">Tocó</span>
+                    <button class="speak-btn" onclick="event.stopPropagation(); speak('Touched')">🔊 Pronounce</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-container">
+            <div class="card" onclick="this.classList.toggle('is-flipped')">
+                <div class="card-face card-front">
+                    <span class="tense-label">Present</span>
+                    <span class="verb-text">Jump</span>
+                    <button class="speak-btn" onclick="event.stopPropagation(); speak('Jump')">🔊 Pronounce</button>
+                </div>
+                <div class="card-face card-back">
+                    <span class="tense-label">Past Simple</span>
+                    <span class="verb-text">Jumped</span>
+                    <span class="tense-label">Saltó</span>
+                    <button class="speak-btn" onclick="event.stopPropagation(); speak('Jumped')">🔊 Pronounce</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-container">
+            <div class="card" onclick="this.classList.toggle('is-flipped')">
+                <div class="card-face card-front">
+                    <span class="tense-label">Present</span>
+                    <span class="verb-text">Work</span>
+                    <button class="speak-btn" onclick="event.stopPropagation(); speak('Work')">🔊 Pronounce</button>
+                </div>
+                <div class="card-face card-back">
+                    <span class="tense-label">Past Simple</span>
+                    <span class="verb-text">Worked</span>
+                    <span class="tense-label">Trabajó</span>
+                    <button class="speak-btn" onclick="event.stopPropagation(); speak('Worked')">🔊 Pronounce</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-container">
+            <div class="card" onclick="this.classList.toggle('is-flipped')">
+                <div class="card-face card-front">
+                    <span class="tense-label">Present</span>
+                    <span class="verb-text">Mix</span>
+                    <button class="speak-btn" onclick="event.stopPropagation(); speak('Mix')">🔊 Pronounce</button>
+                </div>
+                <div class="card-face card-back">
+                    <span class="tense-label">Past Simple</span>
+                    <span class="verb-text">Mixed</span>
+                    <span class="tense-label">Mezcló</span>
+                    <button class="speak-btn" onclick="event.stopPropagation(); speak('Mixed')">🔊 Pronounce</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-container">
+            <div class="card" onclick="this.classList.toggle('is-flipped')">
+                <div class="card-face card-front">
+                    <span class="tense-label">Present</span>
+                    <span class="verb-text">Bake</span>
+                    <button class="speak-btn" onclick="event.stopPropagation(); speak('Bake')">🔊 Pronounce</button>
+                </div>
+                <div class="card-face card-back">
+                    <span class="tense-label">Past Simple</span>
+                    <span class="verb-text">Baked</span>
+                    <span class="tense-label">Horneó</span>
+                    <button class="speak-btn" onclick="event.stopPropagation(); speak('Baked')">🔊 Pronounce</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-container">
+            <div class="card" onclick="this.classList.toggle('is-flipped')">
+                <div class="card-face card-front">
+                    <span class="tense-label">Present</span>
+                    <span class="verb-text">Type</span>
+                    <button class="speak-btn" onclick="event.stopPropagation(); speak('Type')">🔊 Pronounce</button>
+                </div>
+                <div class="card-face card-back">
+                    <span class="tense-label">Past Simple</span>
+                    <span class="verb-text">Typed</span>
+                    <span class="tense-label">Escribió</span>
+                    <button class="speak-btn" onclick="event.stopPropagation(); speak('Typed')">🔊 Pronounce</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function speak(text) {
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'en-US';
+            utterance.rate = 0.85;
+            window.speechSynthesis.speak(utterance);
+        }
+    </script>
+</body>
+</html>>

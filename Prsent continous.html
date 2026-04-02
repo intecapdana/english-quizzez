@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --success: #27ae60;
+            --error: #e74c3c;
+            --bg: #f4f7f6;
+        }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); display: flex; justify-content: center; padding: 20px; }
+        #quiz-container { background: rgb(255, 219, 146); padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 500px; }
+        .header { text-align: center; margin-bottom: 20px; }
+        .progress-bar { height: 8px; background: #ddd; border-radius: 4px; margin-bottom: 20px; overflow: hidden; }
+        #progress { height: 100%; background: var(--secondary); width: 0%; transition: width 0.3s; }
+        .question { font-size: 1.2rem; margin-bottom: 15px; color: var(--primary); }
+        .instruction { font-size: 0.9rem; color: #666; margin-bottom: 10px; font-style: italic; }
+        input[type="text"] { width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 6px; font-size: 1rem; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background: var(--secondary); color: white; border: none; border-radius: 6px; margin-top: 15px; cursor: pointer; font-weight: bold; }
+        button:hover { background: #2980b9; }
+        #feedback { margin-top: 15px; padding: 10px; border-radius: 6px; display: none; font-weight: bold; text-align: center; }
+        .correct { background: #d4edda; color: var(--success); }
+        .wrong { background: #f8d7da; color: var(--error); }
+        #final-score { text-align: center; display: none; }
+    </style>
+</head>
+<body>
+
+<div id="quiz-container">
+    <div class="header">
+        <h3>Present Continuous Practice</h3>
+        <div class="progress-bar"><div id="progress"></div></div>
+    </div>
+
+    <div id="quiz-ui">
+        <p class="instruction">Write the full sentence using the words in brackets:</p>
+        <div class="question" id="question-text"></div>
+        <input type="text" id="answer-input" placeholder="Type your answer here..." autocomplete="off">
+        <button onclick="checkAnswer()">Check Answer</button>
+        <button id="next-btn" onclick="nextQuestion()" style="display: none; background: var(--success);">Next Question</button>
+        <div id="feedback"></div>
+    </div>
+
+    <div id="final-score">
+        <h2>Great job!</h2>
+        <p id="score-summary"></p>
+        <button onclick="location.reload()">Try Again</button>
+    </div>
+</div>
+
+<script>
+    const questions = [
+        { prompt: "(She / read / a book)", answer: "She is reading a book" },
+        { prompt: "(They / play / football)", answer: "They are playing football" },
+        { prompt: "(I / study / English)", answer: "I am studying English" },
+        { prompt: "(The dog / run / in the park)", answer: "The dog is running in the park" },
+        { prompt: "(We / eat / lunch)", answer: "We are eating lunch" }
+    ];
+
+    let currentQ = 0;
+    let score = 0;
+
+    function loadQuestion() {
+        if (currentQ < questions.length) {
+            document.getElementById('question-text').innerText = questions[currentQ].prompt;
+            document.getElementById('progress').style.width = (currentQ / questions.length * 100) + "%";
+            document.getElementById('answer-input').value = "";
+            document.getElementById('feedback').style.display = "none";
+        } else {
+            showResults();
+        }
+    }
+
+    function checkAnswer() {
+        const input = document.getElementById('answer-input').value.trim().replace(/[.!]$/, "");
+        const correct = questions[currentQ].answer;
+        const feedback = document.getElementById('feedback');
+        const nextBtn = document.getElementById('next-btn');
+        
+        feedback.style.display = "block";
+        nextBtn.style.display = "block";
+        document.getElementById('answer-input').disabled = true;
+        
+        // Comparación simple (sin importar mayúsculas)
+        if (input.toLowerCase() === correct.toLowerCase()) {
+            feedback.innerText = "✓ Correct!";
+            feedback.className = "correct";
+            score++;
+        } else {
+            feedback.innerText = "✗ Not quite. Correct: " + correct;
+            feedback.className = "wrong";
+        }
+    }
+
+    function nextQuestion() {
+        currentQ++;
+        document.getElementById('answer-input').disabled = false;
+        document.getElementById('next-btn').style.display = "none";
+        loadQuestion();
+    }
+
+    function showResults() {
+        document.getElementById('quiz-ui').style.display = "none";
+        document.getElementById('progress').style.width = "100%";
+        const final = document.getElementById('final-score');
+        final.style.display = "block";
+        document.getElementById('score-summary').innerText = `You scored ${score} out of ${questions.length}`;
+    }
+
+    loadQuestion();
+</script>
+
+</body>
+</html>
